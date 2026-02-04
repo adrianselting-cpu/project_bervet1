@@ -2,7 +2,7 @@ import numpy as np
 
 from scipy import interpolate
 
-#Hej på dig
+#Hej på dig dig lilla skit
 def load_route(route):
     """ 
     Get speed data from route .npz-file. Example usage:
