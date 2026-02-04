@@ -1,8 +1,8 @@
 import numpy as np
 
-
 from scipy import interpolate
 
+#Hej på dig
 def load_route(route):
     """ 
     Get speed data from route .npz-file. Example usage:
