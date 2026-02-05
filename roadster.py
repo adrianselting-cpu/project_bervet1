@@ -2,7 +2,6 @@ import numpy as np
 
 from scipy import interpolate
 
-
 def load_route(route):
     """ 
     Get speed data from route .npz-file. Example usage:
@@ -41,7 +40,7 @@ def consumption(v):
     a4 = 0.008210
     return a1*(v**-1)+a2+a3*v+a4*(v**2) 
 
-print(consumption(15))
+print(consumption(4))
 
 ### PART 1B ###
 def velocity(x, route):
@@ -62,7 +61,17 @@ def velocity(x, route):
 ### PART 2A ###
 def time_to_destination(x, route, n):
     # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
-    raise NotImplementedError('time_to_destination not implemented yet!')
+    steps = np.linspace(0,x,n+1)
+    v = velocity(steps, route)
+    f = 1/v
+    h = (x-0)/n
+    T = (h/2)*(f[0] + np.sum(f[1:-1]) + f[-1])
+    return T
+
+res = time_to_destination(15.5, 'speed_anna.npz', 2)
+print(res)
+
+
 
 ### PART 2B ###
 def total_consumption(x, route, n):
