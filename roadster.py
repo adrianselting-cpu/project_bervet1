@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 from scipy import interpolate
 
 def load_route(route):
@@ -65,18 +65,54 @@ def time_to_destination(x, route, n):
     v = velocity(steps, route)
     f = 1/v
     h = (x-0)/n
-    T = (h/2)*(f[0] + np.sum(f[1:-1]) + f[-1])
+    T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
     return T
 
 res = time_to_destination(15.5, 'speed_anna.npz', 2)
 print(res)
 
 
-
 ### PART 2B ###
 def total_consumption(x, route, n):
     # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
-    raise NotImplementedError('total_consumption not implemented yet!')
+    steps = np.linspace(0,x,n+1)
+    v = velocity(steps, route)
+    f = consumption(v)
+    h = (x-0)/n
+    T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
+    return T  
+
+res1 = total_consumption(15.4, 'speed_anna.npz', 2)
+print(f'svar 2b: {res1}')
+
+### PART 2C ###
+
+n_steps = np.array([10, 20, 40, 80, 160, 320])
+
+n1 = total_consumption(15.4, 'speed_anna.npz', 10)
+n2 = total_consumption(15.4, 'speed_anna.npz', 20)
+n3 = total_consumption(15.4, 'speed_anna.npz', 40)
+n4 = total_consumption(15.4, 'speed_anna.npz', 80)
+n5 = total_consumption(15.4, 'speed_anna.npz', 160)
+n6 = total_consumption(15.4, 'speed_anna.npz', 320)
+n7 = total_consumption(15.4, 'speed_anna.npz', 640)
+
+errors = [np.abs(n7 - val) for val in [n1, n2, n3, n4, n5, n6]]
+
+# Plotta dina beräknade fel
+plt.loglog(n_steps, errors, '-o', label='Beräknat fel (Trapetsmetoden)')
+
+# Skapa en hjälplinje för O(1/n^2) för att jämföra med teorin
+# Vi utgår från första felet och minskar det med (1/n^2)
+plt.loglog(n_steps, errors[0] * (n_steps[0]/n_steps)**2, '--', label='Teoretisk lutning O(1/n²)')
+
+plt.xlabel('Antal delintervall n')
+plt.ylabel('Integrationsfel')
+plt.title('Konvergensstudie: Trapetsmetoden')
+plt.legend()
+plt.show()
+
+
 
 ### PART 3A ###
 def distance(T, route): 
