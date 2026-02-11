@@ -59,8 +59,7 @@ def velocity(x, route):
     return v
 
 ### PART 2A ###
-def time_to_destination(x, route, n):
-    # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
+def time_to_destination(x, route, n):   
     steps = np.linspace(0,x,n+1)
     v = velocity(steps, route)
     f = 1/v
