@@ -67,8 +67,11 @@ def time_to_destination(x, route, n):
     T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
     return T
 
-res = time_to_destination(15.5, 'speed_anna.npz', 2)
-print(res)
+res1 = time_to_destination(15.5, 'speed_anna.npz', 2)
+res2 = time_to_destination(15.5, 'speed_elsa.npz', 2)
+res = (res1, res2)
+for i in res:
+    print(i)
 
 
 ### PART 2B ###
@@ -82,7 +85,10 @@ def total_consumption(x, route, n):
     return T  
 
 res1 = total_consumption(15.4, 'speed_anna.npz', 2)
-print(f'svar 2b: {res1}')
+res2 = total_consumption(15.4, 'speed_elsa.npz', 2)
+res = (res1,res2)
+for i in res:
+    print(f'svar 2b: {i}')
 
 ### PART 2C ###
 
