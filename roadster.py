@@ -67,8 +67,8 @@ def time_to_destination(x, route, n):
     T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
     return T
 
-res1 = time_to_destination(15.5, 'speed_anna.npz', 2)
-res2 = time_to_destination(15.5, 'speed_elsa.npz', 2)
+res1 = time_to_destination(65, 'speed_anna.npz', 100)
+res2 = time_to_destination(65, 'speed_elsa.npz', 100)
 res = (res1, res2)
 for i in res:
     print(i)
@@ -84,8 +84,8 @@ def total_consumption(x, route, n):
     T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
     return T  
 
-res1 = total_consumption(15.4, 'speed_anna.npz', 2)
-res2 = total_consumption(15.4, 'speed_elsa.npz', 2)
+res1 = total_consumption(65, 'speed_anna.npz', 100)
+res2 = total_consumption(65, 'speed_elsa.npz', 100)
 res = (res1,res2)
 for i in res:
     print(f'svar 2b: {i}')
@@ -94,13 +94,13 @@ for i in res:
 
 n_steps = np.array([10, 20, 40, 80, 160, 320])
 
-n1 = total_consumption(15.4, 'speed_anna.npz', 10)
-n2 = total_consumption(15.4, 'speed_anna.npz', 20)
-n3 = total_consumption(15.4, 'speed_anna.npz', 40)
-n4 = total_consumption(15.4, 'speed_anna.npz', 80)
-n5 = total_consumption(15.4, 'speed_anna.npz', 160)
-n6 = total_consumption(15.4, 'speed_anna.npz', 320)
-n7 = total_consumption(15.4, 'speed_anna.npz', 640)
+n1 = total_consumption(65, 'speed_anna.npz', 10)
+n2 = total_consumption(65, 'speed_anna.npz', 20)
+n3 = total_consumption(65, 'speed_anna.npz', 40)
+n4 = total_consumption(65, 'speed_anna.npz', 80)
+n5 = total_consumption(65, 'speed_anna.npz', 160)
+n6 = total_consumption(65, 'speed_anna.npz', 320)
+n7 = total_consumption(65, 'speed_anna.npz', 640)
 
 errors = [np.abs(n7 - val) for val in [n1, n2, n3, n4, n5, n6]]
 
