@@ -143,7 +143,7 @@ def distance(T, route):
 # Tiden i timmar (30 min = 0.5 h)
 T_target = 0.5
 
-# Här skickar vi in filnamnen som strängar, precis som i dina tidigare anrop
+
 dist_anna = distance(T_target, 'speed_anna.npz')
 dist_elsa = distance(T_target, 'speed_elsa.npz')
 
@@ -152,5 +152,34 @@ print(f"Efter 30 minuter har Elsa kommit {dist_elsa:.2f} km.")
 
 ### PART 3B ###
 def reach(C, route):
-    # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
-    raise NotImplementedError('reach not implemented yet!')
+    tol = 1e-4
+    n_int = 1000
+
+    #Räcker batteriet? 
+    dist_km, _ = load_route(route)  # Vi laddar in filen för att se hur lång vägen är
+    max_dist = dist_km[-1]
+    if total_consumption(max_dist, route, n_int) <= C:
+        return max_dist
+    
+    x = max_dist / 2
+    diff = 1
+
+    while diff > tol: 
+        x_old = x
+        fx = total_consumption(x, route, n_int) - C
+        fprime_x = consumption(velocity(x,route))
+        x_ny = x_old - fx / fprime_x
+        diff = abs(x_ny-x_old)
+        x = x_ny
+
+    return x
+
+
+C_target = 10000
+
+
+reach_anna = reach(C_target, 'speed_anna.npz')
+reach_elsa = reach(C_target, 'speed_elsa.npz')
+
+print(f"Med batteriladdning {C_target} Wh tar Anna sig {reach_anna:.2f} km")
+print(f"Med batteriladdning {C_target} Wh tar Elsa sig {reach_elsa:.2f} km")
