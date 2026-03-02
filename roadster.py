@@ -121,8 +121,34 @@ plt.show()
 
 ### PART 3A ###
 def distance(T, route): 
-    # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
-    raise NotImplementedError('distance not implemented yet!')
+    tol = 1e-4
+    x = velocity(0,route) * T
+    diff = 1
+    n_int = 1000
+
+    def f(val): 
+        return time_to_destination(val, route, n_int) - T 
+    
+    def fprime(val): 
+        return 1/velocity(val, route)
+    
+    while diff > tol: 
+        f_val = f(x)
+        fprime_val = fprime(x)
+        x_ny = x - f_val/fprime_val
+        diff = abs(x_ny-x)
+        x = x_ny
+    return x
+
+# Tiden i timmar (30 min = 0.5 h)
+T_target = 0.5
+
+# Här skickar vi in filnamnen som strängar, precis som i dina tidigare anrop
+dist_anna = distance(T_target, 'speed_anna.npz')
+dist_elsa = distance(T_target, 'speed_elsa.npz')
+
+print(f"Efter 30 minuter har Anna kommit {dist_anna:.2f} km.")
+print(f"Efter 30 minuter har Elsa kommit {dist_elsa:.2f} km.")
 
 ### PART 3B ###
 def reach(C, route):
