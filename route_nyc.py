@@ -27,5 +27,54 @@ def route_nyc(t,x):
 
 ### PART 4A ###
 def nyc_route_traveler_euler(t0,h):
-    # REMOVE THE FOLLOWING LINE AND WRITE YOUR SOLUTION
-    raise NotImplementedError('nyc_route_traveler_euler not implemented yet!')
+    time_list = [t0]
+    x_list = [0.0]
+    v_list = []
+
+    tmax = 24
+    xmax = 60
+    while time_list[-1] < tmax and x_list[-1] < xmax:
+
+        t = time_list[-1]
+        x = x_list[-1]
+        v = float(route_nyc(t, x))
+
+        # Spara hastigheten i nuvarande punkt
+        v_list.append(v)
+
+        # Eulersteg
+        t_next = t + h
+        x_next = x + h * v
+
+        # Om vi passerar 60 km – korta sista steget
+        if x_next >= 60:
+            h_last = (60 - x) / v
+            t_next = t + h_last
+            x_next = 60
+
+            time_list.append(t_next)
+            x_list.append(x_next)
+            v_list.append(float(route_nyc(t_next, x_next)))
+            break
+
+        time_list.append(t_next)
+        x_list.append(x_next)
+
+    return np.array(time_list), np.array(x_list), np.array(v_list)
+
+t_04, x_04, v_04 = nyc_route_traveler_euler(4.0, 0.01)
+t_0930, x_0930, v_0930 = nyc_route_traveler_euler(9.5, 0.01)
+
+arrival_04 = t_04[-1]
+arrival_0930 = t_0930[-1]
+
+travel_time_04 = arrival_04 - 4.0
+travel_time_0930 = arrival_0930 - 9.5
+
+print("Start 04:00")
+print("Ankomsttid:", arrival_04)
+print("Restid:", travel_time_04, "timmar")
+
+print("\nStart 09:30")
+print("Ankomsttid:", arrival_0930)
+print("Restid:", travel_time_0930, "timmar")
