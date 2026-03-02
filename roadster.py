@@ -124,7 +124,7 @@ def distance(T, route):
     tol = 1e-4
     x = velocity(0,route) * T
     diff = 1
-    n_int = 1000
+    n_int = 1000000
 
     def f(val): 
         return time_to_destination(val, route, n_int) - T 
@@ -153,7 +153,7 @@ print(f"Efter 30 minuter har Elsa kommit {dist_elsa:.2f} km.")
 ### PART 3B ###
 def reach(C, route):
     tol = 1e-4
-    n_int = 1000
+    n_int = 1000000
 
     #Räcker batteriet? 
     dist_km, _ = load_route(route)  # Vi laddar in filen för att se hur lång vägen är
