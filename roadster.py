@@ -84,27 +84,41 @@ def total_consumption(x, route, n):
     T = (h/2)*(f[0] + 2 * np.sum(f[1:-1]) + f[-1])
     return T  
 
-res1 = total_consumption(65, 'speed_anna.npz', 100)
-res2 = total_consumption(65, 'speed_elsa.npz', 100)
-res = (res1,res2)
-for i in res:
-    print(f'svar 2b: {i}')
+res1 = total_consumption(65, 'speed_anna.npz', 100000)
+res2 = total_consumption(65, 'speed_elsa.npz', 100000)
+print(f'Anna konsumption 2b: {res1}')
+print(f'Elsa konsumption 2b: {res2}')
+
+
+n_test_values = [10, 100, 1000, 10000, 100000, 1000000] 
+prev_res = 0      
+
+print(f"{'Antal n':>10} | {'Anna Konsumtion (Wh)':>20} | {'Skillnad':>15}")
+print("-" * 52)
+
+for n in n_test_values:
+    current_res = total_consumption(65, 'speed_anna.npz', n)                      
+    diff = abs(current_res - prev_res) if prev_res != 0 else 0
+    
+    print(f"{n:10d} | {current_res:20.6f} | {diff:15.6f}")
+    
+    prev_res = current_res
 
 ### PART 2C ###
 
-n_steps = np.array([10, 20, 40, 80, 160, 320])
+n_steps = np.array([1000000, 2000000, 4000000, 8000000, 16000000, 32000000])
 
-n1 = total_consumption(65, 'speed_anna.npz', 10)
-n2 = total_consumption(65, 'speed_anna.npz', 20)
-n3 = total_consumption(65, 'speed_anna.npz', 40)
-n4 = total_consumption(65, 'speed_anna.npz', 80)
-n5 = total_consumption(65, 'speed_anna.npz', 160)
-n6 = total_consumption(65, 'speed_anna.npz', 320)
-n7 = total_consumption(65, 'speed_anna.npz', 640)
+n1 = total_consumption(65, 'speed_anna.npz', 1000000)
+n2 = total_consumption(65, 'speed_anna.npz', 2000000)
+n3 = total_consumption(65, 'speed_anna.npz', 4000000)
+n4 = total_consumption(65, 'speed_anna.npz', 8000000)
+n5 = total_consumption(65, 'speed_anna.npz', 16000000)
+n6 = total_consumption(65, 'speed_anna.npz', 32000000)
+n7 = total_consumption(65, 'speed_anna.npz', 64000000)
 
 errors = [np.abs(n7 - val) for val in [n1, n2, n3, n4, n5, n6]]
 
-# Plotta dina beräknade fel
+# Plotta beräknade fel
 plt.loglog(n_steps, errors, '-o', label='Beräknat fel (Trapetsmetoden)')
 
 # Skapa en hjälplinje för O(1/n^2) för att jämföra med teorin
