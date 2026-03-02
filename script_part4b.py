@@ -34,3 +34,5 @@ t_late, x_late, _ = route_nyc.nyc_route_traveler_euler(t0_late, h_step)
 plt.plot(t_late, x_late, 'm-', linewidth=2, label='Start 09:30')
 
 plt.legend(loc='upper left')
+
+plt.show()
